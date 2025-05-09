@@ -24,4 +24,4 @@ render_scene(scene, samples = 500, fov = 40, clamp_value = 5)
 #This actually renders the image (i.e., simulates light rays and creates the final picture).
 ```
 
-the generated pic is under docs/p08_files/figure-html/unnamed-chunk-2-1.png
+the generated pic is under docs/p08_files/figure-html/
