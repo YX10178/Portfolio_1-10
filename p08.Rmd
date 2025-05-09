@@ -2,4 +2,26 @@
 title: "Portfolio 8"
 ---
 
-> The projects should be numbered consecutively (i.e., in the order in which you began them), and should include for each project a description of the goal, the product (computer program, hand graph, computer graph, etc.), the data, and some interpretation. Reports must be reproducible and of high quality in terms of writing, grammar, presentation, etc.
+In this portfolio, I learned the package Rayrender, which build 3D scenes using basic shapes and materials. 
+
+```{r}
+#install.packages("rayrender")
+library(rayrender)
+```
+
+```{r}
+# Scene setup
+scene <- generate_cornell() %>% #creates a Cornell Box scene — a classic 3D test room used in computer graphics.
+  add_object(sphere(x = 278, y = 200, z = 278, radius = 100,
+                    material = dielectric(color = "white", refraction = 1.5))) %>%
+  #Adds a glass-like sphere to the center of the scene.
+  add_object(sphere(x = 200, y = 300, z = 300, radius = 50,
+                    material = diffuse(color = "purple"))) %>%
+  #Adds a second diffuse purple sphere (matte surface, no shine) at a higher point.
+  add_object(sphere(x = 350, y = 150, z = 200, radius = 40,
+                    material = diffuse(color = "cyan")))
+render_scene(scene, samples = 500, fov = 40, clamp_value = 5)
+#This actually renders the image (i.e., simulates light rays and creates the final picture).
+```
+
+the generated pic is under docs/p08_files/figure-html/unnamed-chunk-2-1.png

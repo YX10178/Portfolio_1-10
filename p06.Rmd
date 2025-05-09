@@ -2,4 +2,72 @@
 title: "Portfolio 6"
 ---
 
-> The projects should be numbered consecutively (i.e., in the order in which you began them), and should include for each project a description of the goal, the product (computer program, hand graph, computer graph, etc.), the data, and some interpretation. Reports must be reproducible and of high quality in terms of writing, grammar, presentation, etc.
+In this portfolio, I will continue the project started at portfolio 4 and 5, using the dataset diamonds. I will fit a linear regression model to see how the clarity and color of a diamond affects its price and how much it explains the differences in prices. 
+ 
+load the data
+```{r}
+library(ggplot2)
+data(diamonds)
+head(diamonds)
+summary(diamonds)
+?diamonds
+```
+
+Price and color
+```{r}
+ggplot(diamonds, aes(x = color, y = price)) +
+  stat_summary(fun = mean, geom = "bar", fill = "skyblue", color = "black") +
+  labs(title = "Average Diamond Price by color", x = "color", y = "Average Price")
+
+```
+
+Price and clarity 
+```{r}
+ggplot(diamonds, aes(x = clarity, y = price)) +
+  stat_summary(fun = mean, geom = "bar", fill = "skyblue", color = "black") +
+  labs(title = "Average Diamond Price by Clarity", x = "Clarity", y = "Average Price")
+
+```
+
+Price, color, Linear Regression Model
+```{r}
+# Convert 'color' to an unordered factor
+diamonds$color <- factor(diamonds$color, ordered = FALSE)
+
+Price_Color <- lm(price ~ color, data=diamonds)
+summary (Price_Color)
+summary(Price_Color)$r.squared
+```
+
+Intercept 3169.95
+Price  = -93.20 colorE  + 554.93 colorF + 829.18 colorG + 1316.72 colorH +  1921.92 colorI +  2153.86 colorJ + 3169.95
+R squared = 0.03127542
+Adjusted R-squared:  0.03117 
+R squared = 0.03127542 . means that approximately 3.13% of the variance in diamond prices is explained by the carat variable alone. 
+
+Price, clarity , Linear Regression Model
+```{r}
+diamonds$clarity <- factor(diamonds$clarity, ordered = FALSE)
+Price_Clarity <- lm(price ~ clarity, data=diamonds)
+summary (Price_Clarity)
+summary(Price_Clarity)$r.squared
+```
+Intercept 3924.1687
+Price  = 1138.8599 claritySI2 + 71.8325 claritySI1 +  0.8207 clarityVS2 + -84.7133 clarityVS1 + -640.4316 clarityVVS2 -1401.0541 clarityVVS1 -1059.3296 clarityIF + 3924.1687
+
+R squared = 0.0271503
+Adjusted R-squared:  0.02702 
+R squared = 0.0271503 . means that approximately 2.72% of the variance in diamond prices is explained by the carat variable alone. 
+
+Price, color and clarity, Linear Regression Model
+```{r}
+Price_Clarity_Color <- lm(price ~ clarity+color, data=diamonds)
+summary (Price_Clarity_Color)
+summary(Price_Clarity_Color)$r.squared
+```
+
+R squared = 0.05937474
+Adjusted R-squared:  0.05915, the explanatory power increased by adding the color factor. 
+R squared = 0.05937474 . means that approximately 5.9% of the variance in diamond prices is explained by the carat variable alone. 
+
+

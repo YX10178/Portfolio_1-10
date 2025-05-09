@@ -2,4 +2,52 @@
 title: "Portfolio 4"
 ---
 
-> The projects should be numbered consecutively (i.e., in the order in which you began them), and should include for each project a description of the goal, the product (computer program, hand graph, computer graph, etc.), the data, and some interpretation. Reports must be reproducible and of high quality in terms of writing, grammar, presentation, etc.
+In this project, I will use the dataset diamonds."A dataset containing the prices and other attributes of almost 54,000 diamonds." The goal is to fit a linear regression model to examine how carat explains the variation in diamond prices. 
+
+load the data
+```{r}
+library(ggplot2)
+data(diamonds)
+head(diamonds)
+summary(diamonds)
+?diamonds
+```
+
+Visualizing Price Distribution
+```{r}
+ggplot(diamonds, aes(x = price)) +
+  geom_histogram(binwidth = 200, fill = "purple",color = "black", alpha = 0.5) +
+  labs(title = "Distribution of Diamond Prices", x = "Price (USD)", y = "Count")
+```
+This graph shows a right-skewed distribution, with most diamond prices falling below $5000. 
+
+Check the Correlation 
+```{r}
+cor(diamonds[, c("price", "carat", "depth", "table", "x", "y", "z")])
+
+```
+
+Scatter Plot: Price vs Carat
+```{r}
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = "lm", col = "blue") +
+  labs(title = "Diamond Price vs Carat Weight", x = "Carat", y = "Price")
+
+```
+
+Price, Carat, Linear Regression Model
+```{r}
+Price_Carat <- lm(price ~ carat, data=diamonds)
+summary (Price_Carat)
+summary(Price_Carat)$r.squared
+```
+
+Intercept -2256.36
+Slope 7756.43 
+Price  = 7756.43 carat -2256.36
+R squared = 0.8493305
+Slope 7756.43 . This means that for every 1 unit increase in carat weight, the price of the diamond increases by $7756.43 on average.
+Intercept -2256.36. This represents the predicted price of a diamond when carat = 0. However, since diamonds with zero carat weight do not exist, this value is not meaningful in practice. 
+R squared = 0.8493305. means that approximately 84.93% of the variance in diamond prices is explained by the carat variable alone. 
+
